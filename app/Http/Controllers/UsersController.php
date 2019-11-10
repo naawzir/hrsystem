@@ -24,7 +24,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        dd('create user form will be here');
+        //dd('create user form will be here');
         return view('user.create');
     }
 
@@ -36,7 +36,22 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $request->validate([
+            'type' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|unique:users'
+        ]);
+
+        $data = [
+            'type' => $request->type,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+        ];
+
+        User::create($data);
+        return redirect('users');
     }
 
     /**
@@ -84,12 +99,18 @@ class UsersController extends Controller
             'last_name' => 'required',
             'email' => 'required|unique:users,email,' . $user->id
         ]);
-        $user->type = $request->type;
+        /*$user->type = $request->type;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-        $user->save();
-
+        $user->save();*/
+        $data = [
+            'type' => $request->type,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+        ];
+        $user->update($data);
         return redirect('home');
     }
 
