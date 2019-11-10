@@ -55,6 +55,7 @@ class UsersController extends Controller
     }
 
     /**
+     * My Profile
      * Display the specified resource.
      *
      * @param  int  $id
